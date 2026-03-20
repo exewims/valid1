@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Динамическая загрузка модуля</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Динамическая загрузка модуля</h1>
+    <button id="loadBtn">Загрузить модуль</button>
+    <div id="result"></div>
+    
+    <script type="module">
+        const loadBtn = document.getElementById('loadBtn');
+        const resultDiv = document.getElementById('result');
+        
+        loadBtn.addEventListener('click', async () => {
+            try {
+                // Динамический импорт модуля
+                const greetingModule = await import('./greeting.js');
+                const message = greetingModule.sayHello('Пользователь');
+                
+                console.log(message);
+                resultDiv.textContent = message;
+                resultDiv.style.color = 'green';
+            } catch (error) {
+                console.error('Ошибка загрузки модуля:', error);
+                resultDiv.textContent = 'Ошибка: не удалось загрузить модуль';
+                resultDiv.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>
